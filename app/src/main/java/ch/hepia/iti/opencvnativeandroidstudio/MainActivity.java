@@ -22,4 +22,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, Labo2Activity.class);
         startActivity(intent);
     }
+
+    public void onClickLabo3Botton(View view) {
+        Intent intent = new Intent(MainActivity.this, Labo3Activity.class);
+        startActivity(intent);
+    }
 }

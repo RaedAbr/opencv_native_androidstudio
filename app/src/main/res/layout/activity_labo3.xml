@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ch.hepia.iti.opencvnativeandroidstudio.Labo3Activity">
+
+    <org.opencv.android.JavaCameraView
+        android:id="@+id/main_surface"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/canny_linearlayout"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#aaa"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/main_surface"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="min threshold : "
+            android:textColor="#000"/>
+
+        <TextView
+            android:id="@+id/min_threshold_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:textColor="#000"/>
+
+        <SeekBar
+            android:id="@+id/min_threshold_seek_bar"
+            style="@style/Base.Widget.AppCompat.SeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="100" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/canny_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:text="Canny"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#a7a7a7"
+        android:onClick="onClickLabo3Button"/>
+
+    <Button
+        android:id="@+id/hough_lines_P_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="#fff"
+        android:onClick="onClickLabo3Button"
+        android:text="Hough Lines P"
+        app:layout_constraintBottom_toBottomOf="@+id/canny_button"
+        app:layout_constraintStart_toEndOf="@+id/canny_button"
+        app:layout_constraintTop_toTopOf="@+id/canny_button" />
+
+    <Button
+        android:id="@+id/hough_circle_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="#fff"
+        android:onClick="onClickLabo3Button"
+        android:text="Hough Circle"
+        app:layout_constraintBottom_toBottomOf="@+id/canny_button"
+        app:layout_constraintStart_toEndOf="@+id/hough_lines_P_button"
+        app:layout_constraintTop_toTopOf="@+id/canny_button"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/find_contours_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="#fff"
+        android:onClick="onClickLabo3Button"
+        android:text="Find Contours"
+        app:layout_constraintBottom_toBottomOf="@+id/canny_button"
+        app:layout_constraintStart_toEndOf="@+id/hough_circle_button"
+        app:layout_constraintTop_toTopOf="@+id/canny_button"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/hough_lines_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="#fff"
+        android:onClick="onClickLabo3Button"
+        android:text="Hough Lines"
+        app:layout_constraintBottom_toBottomOf="@+id/canny_button"
+        app:layout_constraintStart_toEndOf="@+id/find_contours_button"
+        app:layout_constraintTop_toTopOf="@+id/canny_button"
+        app:layout_constraintVertical_bias="1.0" />
+
+</android.support.constraint.ConstraintLayout>
