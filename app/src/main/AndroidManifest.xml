@@ -25,13 +25,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Labo1Activity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".Labo2Activity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".Labo3Activity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Labo1Activity"
+            android:name=".labo4.Labo4Activity"
             android:screenOrientation="landscape" />
     </application>
 

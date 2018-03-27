@@ -3,6 +3,9 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/features2d/features2d.hpp>
+#include <vector>
+#include <string>
+#include <sstream>
 
 using namespace std;
 using namespace cv;
@@ -339,4 +342,70 @@ JNIEXPORT void JNICALL Java_ch_hepia_iti_opencvnativeandroidstudio_Labo3Activity
     }
 }
 // end labo3 ////////////////////////////////////////////////////////////////////
+
+// labo4 /////////////////////////////////////////////////////////////////////////
+JNIEXPORT void JNICALL Java_ch_hepia_iti_opencvnativeandroidstudio_labo4_Labo4Activity_colorDetection(
+        JNIEnv *env, jobject instance,
+        jlong matAddrSrc, jlong matAddrDest,
+        jint hueLow, jint hueHigh, jint satLow,
+        jint satHigh, jint lightLow, jint lightHigh)
+{
+
+    Mat &matSrc = *(Mat *) matAddrSrc;
+    Mat &matDest = *(Mat *) matAddrDest;
+    Mat matDetect;
+
+    matDest = matSrc.clone();
+
+    int thresh = 136;
+
+    // Transformation de l'image RGB vers HSV
+    cvtColor(matSrc, matDetect, COLOR_BGR2HSV);
+
+    Mat1b mask1, mask2;
+//    inRange(matDest, Scalar(0, 70, 50), Scalar(10, 255, 255), matDest);
+    inRange(matDetect, Scalar(hueLow, satLow, lightLow), Scalar(hueHigh, satHigh, lightHigh), matDetect);
+
+    // Ouverture: permet de supprimer les petits objets du 1er plan(remove small objects from the foreground)
+    erode(matDetect, matDetect, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+    dilate(matDetect, matDetect, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+
+    //Fermeture: permet de supprimer les
+    dilate(matDetect, matDetect, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+    erode(matDetect, matDetect, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+
+
+
+    vector<vector<Point> > contours;
+    vector<Vec4i> hierarchy;
+
+    /// Detect edges using Threshold
+    threshold( matDetect, matDetect, thresh, 255, THRESH_BINARY );
+    /// Find contours
+    findContours( matDetect, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE, Point(0, 0) );
+
+    /// Approximate contours to polygons + get bounding rects
+    vector<vector<Point> > contours_poly( contours.size() );
+    vector<Rect> boundRect( contours.size() );
+
+    for( int i = 0; i < contours.size(); i++ )
+    { approxPolyDP( Mat(contours[i]), contours_poly[i], 3, true );
+        boundRect[i] = boundingRect( Mat(contours_poly[i]) );
+    }
+
+
+    /// Draw polygonal contour + bonding rects + circles
+//    Mat drawing = Mat::zeros( matDetect.size(), CV_8UC3 );
+    for( int i = 0; i< contours.size(); i++ )
+    {
+        Scalar color = Scalar( 0, 0, 255 );
+        drawContours( matDest, contours_poly, i, color, 1, 8, vector<Vec4i>(), 0, Point() );
+        rectangle( matDest, boundRect[i].tl(), boundRect[i].br(), color, 2, 8, 0 );
+        ostringstream nbr;
+        nbr << i;
+        putText(matDest, nbr.str(), boundRect[i].tl(), FONT_HERSHEY_SIMPLEX, 1, Scalar(255, 0, 0));
+    }
+
+}
+// end labo4 ////////////////////////////////////////////////////////////////////
 }
