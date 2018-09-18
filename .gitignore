@@ -50,3 +50,5 @@ captures/
 
 ### Android Patch ###
 gen-external-apklibs
+
+.idea
